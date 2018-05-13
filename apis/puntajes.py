@@ -37,7 +37,8 @@ class Puntajes(Resource):
 class PuntajeUsuario(Resource):
     @api.doc(summary='Obtener los puntajes de un usuario', responses={200: ('Lista de puntajes', [puntaje])})
     def get(self, username):
-        return [{'Usuario': puntaje.IDUsuario, 'Puntaje': puntaje.Puntaje, 'Fecha': str(puntaje.Fecha)} for puntaje in TablaPuntajes.query.filter_by(IDUsuario=username)]
+        usuario = TablaUsuarios.query.filter_by(NombreUsuarios=username)[0]
+        return [{'Usuario': puntaje.IDUsuario, 'Puntaje': puntaje.Puntaje, 'Fecha': str(puntaje.Fecha)} for puntaje in TablaPuntajes.query.filter_by(IDUsuario=usuario.IDUsuarios)]
 
 
 @api.route('/agregar')

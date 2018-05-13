@@ -38,16 +38,16 @@ class Palabras(Resource):
         return [{'Palabra': palabra.Palabra, 'Categoria': palabra.Categoria, 'Exitos': palabra.Exitos, 'Ocurrencias': palabra.Ocurrencias} for palabra in TablaPalabras.query.all()]
 
 
-@api.route('/categorias/<string:categoria>')
+@api.route('/categorias/<int:categoria>')
 class PalabrasPorCategoria(Resource):
     @api.doc(summary='Obtener todas las palabras de una categoria dada', responses={200: ('Lista de palabras', [palabra])})
     def get(self, categoria):
-        if(categoria == "ataque"):
+        if(categoria == 1):
             return [{'Palabra': palabra.Palabra, 'Categoria': palabra.Categoria, 'Exitos': palabra.Exitos,
                      'Ocurrencias': palabra.Ocurrencias} for palabra in
                     TablaPalabras.query.filter_by(Categoria=1)]
 
-        elif(categoria == "cura"):
+        elif(categoria == 0):
             return [{'Palabra': palabra.Palabra, 'Categoria': palabra.Categoria, 'Exitos': palabra.Exitos,
                      'Ocurrencias': palabra.Ocurrencias} for palabra in
                     TablaPalabras.query.filter_by(Categoria=0)]

@@ -30,14 +30,14 @@ puntaje = usuario = api.schema_model('Puntaje', {
 class Puntajes(Resource):
     @api.doc(summary='Obtener todos los puntajes', responses={200: ('Lista de puntajes', [puntaje])})
     def get(self):
-        return [{'IDusuario': puntaje.IDUsuarios, 'Puntaje': puntaje.Puntaje, 'Fecha': str(puntaje.Fecha)} for puntaje in TablaPuntajes.query.all()]
+        return [{'IDusuario': puntaje.IDUsuario, 'Puntaje': puntaje.Puntaje, 'Fecha': str(puntaje.Fecha)} for puntaje in TablaPuntajes.query.all()]
 
 
 @api.route('/<string:username>')
 class PuntajeUsuario(Resource):
     @api.doc(summary='Obtener los puntajes de un usuario', responses={200: ('Lista de puntajes', [puntaje])})
     def get(self, username):
-        return [{'Usuario': puntaje.IDUsuarios, 'Puntaje': puntaje.Puntaje, 'Fecha': str(puntaje.Fecha)} for puntaje in TablaPuntajes.query.filter_by(nombre_usuario=username)]
+        return [{'Usuario': puntaje.IDUsuario, 'Puntaje': puntaje.Puntaje, 'Fecha': str(puntaje.Fecha)} for puntaje in TablaPuntajes.query.filter_by(IDUsuario=username)]
 
 
 @api.route('/agregar')

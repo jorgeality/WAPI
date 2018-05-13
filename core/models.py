@@ -8,7 +8,7 @@ class Palabras(db.Model):
 
 
 class puntos(db.Model):
-    IDUsuario = db.Column(db.Integer, db.ForeignKey('usuarios.IDUsuarios'), primary_key=True)
+    IDUsuario = db.Column(db.Integer, db.ForeignKey('Usuarios.IDUsuarios'), primary_key=True)
     Puntaje = db.Column(db.Integer)
     Fecha = db.Column(db.String(30))
 

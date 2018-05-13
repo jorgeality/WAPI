@@ -68,12 +68,10 @@ class Palabra(Resource):
     def put(self, palabra):
         if request.headers.get('exito'):
             try:
-                upd = TablaPalabras.query.get(palabra)
+                upd = TablaPalabras.query.filter_by(Palabra=palabra)[0]
                 if(request.headers.get('exito') == 'si'):
-                    upd.Exitos = request.json.get(upd.Exitos + 1,upd.Exitos)
-                else:
-                    upd.Exitos = request.json.get(upd.Exitos, upd.Exitos)
-                upd.Ocurrencias = request.json.get(upd.Ocurrencias + 1,upd.Ocurrencias)
+                    upd.Exitos += 1 
+                upd.Ocurrencias += 1
                 db.session.commit()
             except Exception as e:
                 print(e)

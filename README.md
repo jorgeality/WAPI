@@ -60,7 +60,7 @@ with app.app_context():
 1. A parte de implementar el juego en phaser falta un mecanismo para editar los scores (solo se pueden agregar
    con un POST, pero no hay un PUT para editar).
 
-2. falta implementar el agregar las y editar las palabras a la base de datos.
+2. falta implementar el agregar las y editar las palabras a la base de datos. #Editar Done
 
 3. Por simplicidad usé sqlite3 para el proyecto, para cambiarlo debes ir a app.py y
    reemplazar la uri de sqlite3 por la tuya. #DONE, MYSQL implementado usando el dialect PYmySQL
@@ -69,4 +69,4 @@ with app.app_context():
    http basic authentication (tenga en cuenta que solo es seguro usando SSL).
    Esto se tendra en cuenta cuando se necesite la creacion de contraseñas!
 
-5. Falta adaptar puntajes para que use correctamente la base de datos en MySql
+5. Falta adaptar puntajes para que use correctamente la base de datos en MySql #DONE

@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Ejemplo api REST con flask-restplus</title>
+    </head>
+    <body>
+        {% if puntajes %}
+            <h1>Puntajes</h1>
+            <ul>
+                {% for puntaje in puntajes %}
+                    <li>{{ puntaje.nombre_usuario }}: {{ puntaje.puntaje }}, {{ puntaje.fecha }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No hay puntajes registrados!</p>
+        {% endif %}
+    </body>
+</html>

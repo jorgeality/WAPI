@@ -1,3 +1,4 @@
+from flask import request
 from flask_restplus import Namespace, Resource
 from core.models import Palabras as TablaPalabras
 from core.database import db
@@ -56,8 +57,28 @@ class PalabrasPorCategoria(Resource):
 
 
 @api.route('/<string:palabra>')
+@api.param('exito', description='Para saber si el usuario introdujo la palabra bien', _in='header', required=True)
 class Palabra(Resource):
     @api.doc(summary='Obtener una palabra', responses={200: ('Una palabra', palabra)})
     def get(self, palabra):
         palabra = [{'Palabra': palabra.Palabra, 'Categoria': palabra.Categoria, 'Exitos': palabra.Exitos, 'Ocurrencias': palabra.Ocurrencias} for palabra in TablaPalabras.query.filter_by(Palabra=palabra)]
         return palabra[0] if palabra else ({'message': 'palabra no encontrada'}, 404)
+
+    @api.doc(summary='Actualizar exito y ocurrencia de una palabra', responses={200: ('Actualizado')})
+    def put(self, palabra):
+        if request.headers.get('exito'):
+            try:
+                upd = TablaPalabras.query.get(palabra)
+                if(request.headers.get('exito') == 'si'):
+                    upd.Exitos = request.json.get(upd.Exitos + 1,upd.Exitos)
+                else:
+                    upd.Exitos = request.json.get(upd.Exitos, upd.Exitos)
+                upd.Ocurrencias = request.json.get(upd.Ocurrencias + 1,upd.Ocurrencias)
+                db.session.commit()
+            except Exception as e:
+                print(e)
+                return {'message': 'Algo salio mal'}, 400
+        else:
+            return {'message': 'Se necesita el exito!'}, 400
+        return {'message': 'Actualizado'}, 200
+

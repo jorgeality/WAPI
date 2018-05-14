@@ -7,7 +7,7 @@
             <h1>Puntajes</h1>
             <ul>
                 {% for puntaje in puntajes %}
-                    <li>{{ puntaje.nombre_usuario }}: {{ puntaje.puntaje }}, {{ puntaje.fecha }}</li>
+                    <li>{{ puntaje.IDusuario }}: {{ puntaje.Puntaje }}, {{ puntaje.Fecha }}</li>
                 {% endfor %}
             </ul>
         {% else %}

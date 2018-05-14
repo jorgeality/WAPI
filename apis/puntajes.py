@@ -10,7 +10,7 @@ api = Namespace('puntajes', description='Operaciones sobre los puntajes')
 puntaje = usuario = api.schema_model('Puntaje', {
     'type': 'object',
     'properties': {
-        'Usuario':{
+        'usuario':{
             '$ref' : '#/definitions/usuario'
         },
         'Puntaje': {
@@ -45,7 +45,7 @@ class PuntajeUsuario(Resource):
 @api.route('/agregar')
 @api.param('nombre_usuario', description='Nombre del usuario que obtuvo la puntuacion', _in='query', required=True, type='string')
 @api.param('puntaje', description='Puntaje que obtuvo el usuario', _in='query', required=True, type='number')
-@api.param('fecha', description='Fecha de registro del puntaje', _in='query', required=True, type='string')
+@api.param('fecha', description='Fecha de registro del puntaje (el formato es año-mes-dia)', _in='query', required=True, type='string')
 class NuevoPuntaje(Resource):
     @api.doc(summary='Agregar un nuevo puntaje', responses={201: 'Nuevo puntaje creado', 400: 'No se pudo crear el puntaje'})
     def post(self):
@@ -61,14 +61,14 @@ class NuevoPuntaje(Resource):
             db.session.commit()
         except Exception as e:
             print(e)
-            return {'message': 'No se pudo agregar el nuevo puntaje (ya existia)'}, 400
+            return {'message': 'No se pudo agregar el nuevo puntaje'}, 400
         return {'message': 'Nuevo puntaje guardado con exito'}, 200
 
 
 
 @api.route('/actualizar')
 @api.param('nombre_usuario', description='Nombre del usuario que obtuvo la puntuacion', _in='query', required=True, type='string')
-@api.param('puntaje', description='Puntaje del jugador', _in='query', required=True, type='string')
+@api.param('puntaje', description='Puntaje del jugador', _in='query', required=True, type='number')
 class ActualizarPuntaje(Resource):
     @api.doc(summary='Actualizar puntaje existente',
              responses={200: 'Puntaje actualizado', 400: 'No se pudo actualizar'})
@@ -79,12 +79,16 @@ class ActualizarPuntaje(Resource):
         args = parser.parse_args()
 
         try:
+
             upt = TablaUsuarios.query.filter_by(NombreUsuarios=args['nombre_usuario'])[0]
-            uptp = TablaPuntajes.query.filter_by(IDUsuario=upt.IDUsuarios)
+            uptp = TablaPuntajes.query.filter_by(IDUsuario=upt.IDUsuarios)[0]
             uptp.Puntaje = int(args['puntaje'])
+            db.session.commit()
+
             datetoday = str(date.today())
             uptp.Fecha = datetoday
             db.session.commit()
+
         except Exception as e:
             print(e)
             return {'message': 'No se pudo actualizar el puntaje'}, 400

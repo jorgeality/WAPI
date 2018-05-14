@@ -46,6 +46,8 @@ class NuevoUsuario(Resource):
             except Exception as e:
                 print(e)
                 return {'message': 'Datos erróneos (usuario ya existe)'}, 400
+            finally:
+                db.session.close()
         else:
             return {'message': 'Datos erróneos (deben proveerse tanto usuario como contraseña)'}, 400
         return {'message': 'Nuevo usuario creado con éxito'}, 201

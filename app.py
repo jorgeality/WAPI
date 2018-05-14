@@ -21,7 +21,6 @@ app.register_blueprint(api_v1)  # Añadida versión 1 de la API
 def inicio():
     puntajes = requests.get('http://localhost:5000/api/v1/puntajes/').json()
     print(puntajes)
-    # usuarios = []
     return render_template('index.html', puntajes=puntajes)
 
 

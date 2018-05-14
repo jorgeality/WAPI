@@ -45,19 +45,19 @@ class PuntajeUsuario(Resource):
 @api.route('/agregar')
 @api.param('nombre_usuario', description='Nombre del usuario que obtuvo la puntuacion', _in='query', required=True, type='string')
 @api.param('puntaje', description='Puntaje que obtuvo el usuario', _in='query', required=True, type='number')
-@api.param('fecha', description='Fecha de registro del puntaje (el formato es año-mes-dia)', _in='query', required=True, type='string')
 class NuevoPuntaje(Resource):
     @api.doc(summary='Agregar un nuevo puntaje', responses={201: 'Nuevo puntaje creado', 400: 'No se pudo crear el puntaje'})
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('nombre_usuario', type=str, required=True, location='args')
         parser.add_argument('puntaje', type=int, required=True, location='args')
-        parser.add_argument('fecha', type=str, required=True, location='args')
         args = parser.parse_args()
         try:
             idselector = TablaUsuarios.query.filter_by(NombreUsuarios=args['nombre_usuario'])[0]
             id = idselector.IDUsuarios
-            db.session.add(TablaPuntajes(IDUsuario=id, Puntaje=args['puntaje'], Fecha=args['fecha']))
+            datetoday = datetime.utcnow()
+            datstring = str(datetoday.year) + "-" + str(datetoday.month) + "-" + str(datetoday.day)
+            db.session.add(TablaPuntajes(IDUsuario=id, Puntaje=args['puntaje'], Fecha=datstring))
             db.session.commit()
         except Exception as e:
             print(e)

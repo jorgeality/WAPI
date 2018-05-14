@@ -2,7 +2,7 @@ from flask import request, make_response
 from flask_restplus import Namespace, Resource, reqparse
 from core.models import puntos as TablaPuntajes
 from core.models import Usuarios as TablaUsuarios
-from datetime import date as date
+from datetime import datetime
 from core.database import db
 
 api = Namespace('puntajes', description='Operaciones sobre los puntajes')
@@ -68,7 +68,7 @@ class NuevoPuntaje(Resource):
 
 @api.route('/actualizar')
 @api.param('nombre_usuario', description='Nombre del usuario que obtuvo la puntuacion', _in='query', required=True, type='string')
-@api.param('puntaje', description='Puntaje del jugador', _in='query', required=True, type='number')
+@api.param('puntaje', description='Puntaje del jugador', _in='query', required=True, type='integer')
 class ActualizarPuntaje(Resource):
     @api.doc(summary='Actualizar puntaje existente',
              responses={200: 'Puntaje actualizado', 400: 'No se pudo actualizar'})
@@ -79,17 +79,15 @@ class ActualizarPuntaje(Resource):
         args = parser.parse_args()
 
         try:
-
             upt = TablaUsuarios.query.filter_by(NombreUsuarios=args['nombre_usuario'])[0]
             uptp = TablaPuntajes.query.filter_by(IDUsuario=upt.IDUsuarios)[0]
             uptp.Puntaje = int(args['puntaje'])
-            db.session.commit()
 
-            datetoday = str(date.today())
-            uptp.Fecha = datetoday
+            datetoday = datetime.utcnow()
+            uptp.Fecha = str(datetoday.year) + "-" + str(datetoday.month) + "-" + str(datetoday.day)
             db.session.commit()
 
         except Exception as e:
             print(e)
             return {'message': 'No se pudo actualizar el puntaje'}, 400
-        return {'Puntaje actualizado', 200}
+        return {'message': 'Puntaje actualizado'}, 200

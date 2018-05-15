@@ -58,7 +58,7 @@ with app.app_context():
 ## Trabajo pendiente
 
 1. A parte de implementar el juego en phaser falta un mecanismo para editar los scores (solo se pueden agregar
-   con un POST, pero no hay un PUT para editar).
+   con un POST, pero no hay un PUT para editar). #Done!
 
 2. falta implementar el agregar las y editar las palabras a la base de datos. #Editar Done
 

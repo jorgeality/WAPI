@@ -1,15 +1,15 @@
 import requests
 from flask import Flask, render_template
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ivanbano_grupo6:grupo6@204.93.216.11/ivanbano_grupo6'
 
-from core.database import db
 from core.models import *
 
 with app.app_context():
     db.init_app(app)
-
 
 
 from core.api_v1 import blueprint as api_v1

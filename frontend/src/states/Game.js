@@ -7,6 +7,7 @@ export default class extends Phaser.State {
   preload() { }
 
   create() {
+    this.bg = this.game.add.tileSprite(0,0, this.game.width, this.game.height, 'sky');
     const bannerText = 'Press X to starT'
     let banner = this.add.text(this.world.centerX, this.game.height - 80, bannerText, {
       font: '40px Bangers',
@@ -26,13 +27,11 @@ export default class extends Phaser.State {
 
     this.game.add.existing(this.mushroom)
     this.xkey = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
-    this.game.input.keyboard.addKeyCapture([Phaser.Keyboard.LEFT]);
+
   }
 
   render() {
-    if (__DEV__) {
-      this.game.debug.spriteInfo(this.mushroom, 32, 32)
-    }
+    
   }
   
   update() {

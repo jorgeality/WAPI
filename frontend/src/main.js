@@ -25,8 +25,9 @@ class Game extends Phaser.Game {
     this.state.add('Splash', SplashState, false)
     this.state.add('Game', GameState, false)
     this.state.add('Inputw', InputWState, false)
-    this.state.add('gameover', GameOverState, false)
     this.state.add('introducing',Introducing, false)
+    this.state.add('gameover', GameOverState, false)
+    
 
     // with Cordova with need to wait that the device is ready so we will call the Boot state in another file
     if (!window.cordova) {

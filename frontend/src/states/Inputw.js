@@ -5,7 +5,9 @@ import { Game } from 'phaser-ce';
 
 
 export default class extends Phaser.State{
-    init(){    
+    init(_vidas,_score){
+        this.puntaje = _score
+        this.misvidas = _vidas
     }
 
     preload(){
@@ -16,13 +18,29 @@ export default class extends Phaser.State{
     create() {
         this.changedammit = false;
         this._choice = '';
+        this._tries = this.misvidas;
+        
         this.bg = this.game.add.tileSprite(0,0, this.game.width, this.game.height, 'sky');
+        var puntos = this.add.text(this.game.width - 100, this.game.height - 50,'Puntos: '+ this.puntaje,{
+            font: '40px Bangers',
+            fill: '#77BFA3',
+            align:'center'
+        })
+        puntos.anchor.setTo(0.5)
+
         var text = this.add.text(this.world.centerX, this.world.centerY, 'Que Haras?',{
             font: '40px Bangers',
             fill: '#77BFA3',
             align:'center'
         })
         text.anchor.setTo(0.5)
+
+        var playerlife = this.add.text(this.game.width - 80, 10, 'Intentos: '+ this.misvidas,{
+            font: '40px Bangers',
+            fill: '#77BFA3',
+            align:'center'
+        })
+        playerlife.anchor.setTo(0.5)
 
         var buttonA = this.game.add.sprite(this.world.centerX / 2, this.world.centerY + this.world.centerY/2, 'mushroom1');
         var variableA = 'attack';
@@ -53,7 +71,13 @@ export default class extends Phaser.State{
     
     update(){
         if(this.changedammit == true){
-            this.state.start('introducing', true, false, this._choice)
+            this._tries = this.misvidas
+            this._score = this.puntaje
+            this.state.start('introducing', true, false, this._choice, this._score,this._tries)
+        }
+        if(this.misvidas == 0)
+        {
+            this.state.start('gameover',true,false)
         }
     }
     

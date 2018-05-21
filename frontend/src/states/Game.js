@@ -27,7 +27,8 @@ export default class extends Phaser.State {
 
     this.game.add.existing(this.mushroom)
     this.xkey = this.game.input.keyboard.addKey(Phaser.Keyboard.X);
-
+    this._vidas = 3
+    this._score = 0
   }
 
   render() {
@@ -37,7 +38,7 @@ export default class extends Phaser.State {
   update() {
     if(this.xkey.isDown)
     {
-      this.state.start('Inputw')
+      this.state.start('Inputw',true, false, this._vidas, this._score)
     }
   }
 }

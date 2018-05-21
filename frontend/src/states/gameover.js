@@ -13,6 +13,7 @@ export default class extends Phaser.State{
     }
 
     create() {
+        this.reset = false
         this.enemy = this.game.add.sprite(this.world.centerX, this.world.centerY, 'HAH');
         this.enemy.scale.setTo(0.5,0.5)
         

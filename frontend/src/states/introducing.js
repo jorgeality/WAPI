@@ -141,10 +141,12 @@ export default class extends Phaser.State{
 
     //Debugging
     render(){
-        this.game.debug.text(this.words.length,100,200)
-        this.game.debug.text(this.words[this.indice].Palabra, 100, 100);
+        //quitar comentarios para debugging!
+        //this.game.debug.text(this.words.length,100,200)
+        //this.game.debug.text(this.words[this.indice].Palabra, 100, 100);
+        //this.game.debug.text(this.score,200,200);
         this.game.debug.text("Tiempo: " + this.game.time.events.duration, 0,60);
-        this.game.debug.text(this.score,200,200);
+        
     }
     
     

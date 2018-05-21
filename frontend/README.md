@@ -1,4 +1,5 @@
-# Phaser + ES6 + Webpack.
+# Phaser + ES6 + Webpack. WordRPG V1
+#The following boilerplate was used to start the proyect
 #### A bootstrap project to create games with Phaser + ES6 + Webpack.
 
 ![Phaser+ES6+Webpack](https://raw.githubusercontent.com/lean/phaser-es6-webpack/master/assets/images/phaser-es6-webpack.jpg)

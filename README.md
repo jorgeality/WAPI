@@ -1,4 +1,4 @@
-# Ejemplo de una API REST con flask-restplus
+# API REST con flask-restplus
 
 La estructura del proyecto es la siguiente:
 
